@@ -1,0 +1,11 @@
+langgraph
+langgraph-checkpoint-sqlite
+langchain
+langchain-groq
+langchain-core
+pydantic
+python-dotenv
+streamlit
+requests
+python-docx
+mcp==1.9.4

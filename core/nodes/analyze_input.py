@@ -17,17 +17,12 @@ Analyze the resume against the job description using the following steps:
    - Consider both required and preferred qualifications.
    - Do not inflate the score.
 
-2. match_skills:
+2. matched_skills:
    - List the skills, technologies, tools, frameworks, concepts, and qualifications from the job description that are clearly present in the resume.
    - Only include skills that are explicitly mentioned or strongly demonstrated in the resume.
-   - Group them into relevant categories where useful, such as Technical Skills, Frameworks, Cloud, Databases, Soft Skills, etc.
 
 3. missing_skills:
    - List the important skills, technologies, tools, frameworks, concepts, and qualifications required or preferred by the job description that are missing from the resume.
-   - Clearly distinguish between:
-     - Critical/Must-have missing skills
-     - Important missing skills
-     - Nice-to-have missing skills
    - Do not consider a skill missing if the resume clearly demonstrates it under a different but equivalent term.
 
 4. suggestions:
@@ -61,11 +56,11 @@ Specific difficulty:
 
 Steps:
 
-1. strength_shown:
+1. strengths_shown:
    - Identify the strongest skill, behavior, or quality demonstrated by the student.
    - Keep the response within 2 lines maximum.
 
-2. weaknesses_identified:
+2. weakness_identified:
    - Identify the most important weaknesses or gaps demonstrated during the interview.
    - Keep the response within 2 lines maximum.
 
@@ -80,9 +75,9 @@ Steps:
 
 Return the analysis in exactly this format:
 
-strength_shown: <answer>
+strengths_shown: <answer>
 
-weaknesses_identified: <answer>
+weakness_identified: <answer>
 
 root_causes: <answer>
 
@@ -92,7 +87,7 @@ confidence_level: <High/Moderate/Low> - <brief reason>
 def analyze_input_node(state: GraphState) -> dict:
     llm = get_llm(temperature= 0.2)
 
-    if state["node"] =="new_prep":
+    if state["mode"] =="new_prep":
         structured_llm = llm.with_structured_output(ResumeAnalysis)
         analysis: ResumeAnalysis = structured_llm.invoke(
             RESUME_ANALYSIS_PROMPT.format(resume = state["resume_text"], jd = state["jd_text"])

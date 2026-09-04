@@ -84,3 +84,33 @@ class GraphState(TypedDict, total = False):
     what_went_well: str
     what_went_wrong: str
     difficulty_faced: str
+
+    #input --common for both modes
+    company_name: str
+    role_title: str
+    interview_date: str 
+
+    #--analysis
+    resume_analysis: ResumeAnalysis
+    debrief_analysis: DebriefAnalysis
+    company_overview: dict # raw MCP result
+
+    # --prep
+    prep_package: PrepPackage
+
+    #--mock interiew loop
+    answers : dict[str,str]
+    evaluation_history : Annotated[list[InterviewEvaluation],_combine_evals]
+    retry_count: int
+
+    #--resume editor
+    original_match_score: float
+    tailored_resume: TailoredResume
+    new_match_score: float
+    tailored_resume_docx_path: str
+
+    # output
+    final_report: str
+
+    # trace
+    messages: Annotated[list, add_messages]

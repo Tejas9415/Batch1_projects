@@ -8,4 +8,4 @@ python-dotenv
 streamlit
 requests
 python-docx
-mcp==1.9.4
+mcp>=2.0,<3

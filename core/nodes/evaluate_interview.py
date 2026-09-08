@@ -5,7 +5,7 @@ from core.llm import get_llm
 from core.state import GraphState, InterviewEvaluation
 
 MAX_RETRIES = 2
-Threshold_score = 80
+Threshold_score = 60
 
 EVAL_PROMPT = """
 You are a strict but fair interview evaluator. Given below are Q&A pairs, evaluate them.

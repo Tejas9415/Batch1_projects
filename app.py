@@ -102,7 +102,10 @@ with tab1:                                                                  # is
         if resume_submitted:                                               # agar answers submit hue
             config = {"configurable": {"thread_id": st.session_state.thread_id}}  # SAME thread_id - warna checkpointer ko pata nahi chalega yeh kaunsa session resume ho raha hai
             with st.spinner("Answers evaluate ho rahe hain..."):           # loading spinner
-                result = graph1.invoke(Command(resume=answers), config=config)  # GRAPH KO RESUME KARO - answers dict wahi value ban jaayegi jo interrupt() ne "return" ki thi
+                result = graph1.invoke(
+    Command(resume={"answers": answers}),
+    config=config
+)  # GRAPH KO RESUME KARO - answers dict wahi value ban jaayegi jo interrupt() ne "return" ki thi
             st.session_state.graph1_result = result                       # naya result save kiya
             st.session_state.phase = "interrupted" if "__interrupt__" in result else "done"  # phir check karo - agar retry loop trigger hua, phase phir "interrupted" hi rahega
             st.rerun()                                                     # rerun taaki naya phase turant dikhe (agar retry hua toh naye weak questions ka form aayega)

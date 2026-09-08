@@ -91,7 +91,7 @@ with tab1:                                                                  # is
     if st.session_state.phase == "interrupted":                            # agar graph interrupt() par ruka hua hai
         st.subheader("Step 2: Mock Interview Questions")                   # sub-heading
         interrupt_payload = st.session_state.graph1_result["__interrupt__"][0].value  # interrupt() ne jo dict bheja tha (Day 3, collect_answers.py), woh yahan milta hai
-        st.info(interrupt_payload["instruction"])                          # instruction text dikhao ("In sawalon ke jawab do:")
+        st.info(interrupt_payload["instructions"])                          # instruction text dikhao ("In sawalon ke jawab do:")
 
         with st.form("answers_form"):                                      # naya form - answers collect karne ke liye
             answers = {}                                                   # empty dict - har question ka jawab yahan bharenge

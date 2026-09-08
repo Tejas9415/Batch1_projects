@@ -39,7 +39,9 @@ Return the analysis in a clear, structured format.
 """
 
 DEBRIEF_ANALYSIS_PROMPT = """
-You are an experienced interview coach. Analyze the student's interview performance based strictly on the self-report provided below. Be honest, practical, and constructive. Do not make assumptions beyond the information provided.
+You are an experienced interview coach. Analyze the student's interview performance based strictly on the self-report provided below.
+
+Be honest, practical, and constructive. Do not make assumptions beyond the information provided.
 
 Company: {company}
 
@@ -54,34 +56,30 @@ Where the student actually struggled:
 Specific difficulty:
 {difficulty}
 
-Steps:
+Analyze the interview using the following:
 
 1. strengths_shown:
-   - Identify the strongest skill, behavior, or quality demonstrated by the student.
-   - Keep the response within 2 lines maximum.
+   - Identify the strongest skills, behaviors, or qualities demonstrated by the student.
+   - Return a short list.
 
 2. weakness_identified:
-   - Identify the most important weaknesses or gaps demonstrated during the interview.
-   - Keep the response within 2 lines maximum.
+   - Identify the most important weaknesses or knowledge gaps demonstrated during the interview.
+   - Return a short list.
 
 3. root_causes:
    - Identify the likely underlying reasons behind the student's difficulties.
-   - Keep the response within 2 lines maximum.
+   - Return a short list.
 
 4. confidence_level:
-   - Assess the student's confidence level based on the self-report.
-   - Give a level: High, Moderate, or Low, followed by a brief reason.
-   - Keep the response within 2 lines maximum.
+   - Assess the student's confidence based strictly on the self-report.
+   - Choose exactly one:
+     - low
+     - medium
+     - high
 
-Return the analysis in exactly this format:
-
-strengths_shown: <answer>
-
-weakness_identified: <answer>
-
-root_causes: <answer>
-
-confidence_level: <High/Moderate/Low> - <brief reason>
+Do not return markdown.
+Do not return labels such as "strengths_shown:" manually.
+Return only the structured information requested by the schema.
 """
 
 def analyze_input_node(state: GraphState) -> dict:
@@ -104,7 +102,7 @@ def analyze_input_node(state: GraphState) -> dict:
         }
     structured_llm = llm.with_structured_output(DebriefAnalysis)
     debriefing: DebriefAnalysis = structured_llm.invoke(
-    DEBRIEF_ANALYSIS_PROMPT.format(company = state["company"], round_name = state.get("round_name","N/A"), what_went_well = state.get("what_went_well",""),
+    DEBRIEF_ANALYSIS_PROMPT.format(company = state.get("company_name","Company"), round_name = state.get("round_name","N/A"), what_went_well = state.get("what_went_well",""),
                                    what_went_wrong = state.get("what_went_wrong",""), difficulty = state.get("difficulty_faced"," Not Specified") )
         )
     return {
